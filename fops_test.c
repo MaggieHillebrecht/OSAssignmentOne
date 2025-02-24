@@ -4,6 +4,7 @@
 #include "fops.h"
 
 int main(int argc, char** argv){
+    int result;
     /*
     Try catch, checking the first index of argv to see if it is create, write, read, close, delete
     
@@ -17,7 +18,11 @@ int main(int argc, char** argv){
             printf("Invalid amount of arguments. Exiting...\n");
             return -1;
         } else {
-        createFile(argv[2], (O_CREAT | O_WRONLY | O_TRUNC), (0744));
+            result = createFile(argv[2], (O_CREAT | O_WRONLY | O_TRUNC), (0744));
+            if (result != 0) {
+                perror("Error creating file");
+                return -1;
+            }
         }
     }
     else if (strcmp(argv[1], "write") == 0) {
@@ -25,8 +30,11 @@ int main(int argc, char** argv){
             printf("Invalid amount of arguments. Exiting...\n");
             return -1;
         } else {
-        writeToFile(createFile(argv[2], (O_WRONLY), 644), argv[3], strlen(argv[3]));
-        strerror(errno);
+            result = writeToFile(createFile(argv[2], (O_WRONLY), 644), argv[3], strlen(argv[3]));
+            if (result != 0) {
+                perror("Error writing to file");
+                return -1;
+            }
         }
     }
     else if (strcmp(argv[1], "read") == 0) {
@@ -34,9 +42,15 @@ int main(int argc, char** argv){
             printf("Invalid amount of arguments. Exiting...\n");
             return -1;
         } else {
-        char buffer[500];
-        readFromFile(createFile(argv[2],O_RDONLY, 444), buffer, 5000);
-        printf("%s\n", buffer);
+            char buffer[500];
+            result = readFromFile(createFile(argv[2],O_RDONLY, 444), buffer, sizeof(buffer));
+            if (result != 0) {
+                perror("Error reading from file");
+                return -1;
+            }
+            else {
+                printf("%s\n", buffer);
+            }
         }
     }
     else if (strcmp(argv[1], "close") == 0) {
@@ -44,7 +58,11 @@ int main(int argc, char** argv){
             printf("Invalid amount of arguments. Exiting...\n");
             return -1;
         } else {
-        closeFile(createFile(argv[2],O_RDONLY, 444));
+            result = closeFile(createFile(argv[2],O_RDONLY, 444));
+            if (result != 0) {
+                perror("Error closing the file");
+                return -1;
+            }
         }
     }
     else if (strcmp(argv[1], "delete") == 0) {
@@ -52,10 +70,15 @@ int main(int argc, char** argv){
             printf("Invalid amount of arguments. Exiting...\n");
             return -1;
         } else {
-        deleteFile(argv[2]);
+            if (deleteFile(argv[2]) != 0) {
+                perror("Error closing file");
+                return -1;
+            }
         }
     }
     else {
+        errno = EINVAL;
         perror("Invalid command");
+        return -1;
     }
 }
