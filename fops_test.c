@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdio.h>
 #include <sys/stat.h>
 #include <sys/syscall.h>
 #include <errno.h>
@@ -13,18 +14,38 @@ int main(int argc, char** argv){
     */
 
     if (argv[1] == "create") {
-        createFile(argv[2], 1, SYS_open); // open?
+        if (argc < 3 && argc > 4) {
+            printf("Invalid amount of arguments. Exiting...");
+            _exit(-1);
+        }
+        createFile(argv[2], 1, 744); // open?
     }
     else if (argv[1] == "write") {
+        if (argc < 4 && argc > 5) {
+            printf("Invalid amount of arguments. Exiting...");
+            _exit(-1);
+        }
         writeToFile(argv[2], argv[3], 1);
     }
     else if (argv[1] == "read") {
-        readFromFile(argv[2], 0, 1);
+        if (argc < 3 && argc > 4) {
+            printf("Invalid amount of arguments. Exiting...");
+            _exit(-1);
+        }
+        readFromFile(argv[2], "", 1);
     }
     else if (argv[1] == "close") {
+        if (argc < 3 && argc > 4) {
+            printf("Invalid amount of arguments. Exiting...");
+            _exit(-1);
+        }
         closeFile(argv[2]);
     }
     else if (argv[1] == "delete") {
+        if (argc < 3 && argc > 4) {
+            printf("Invalid amount of arguments. Exiting...");
+            _exit(-1);
+        }
         deleteFile(argv[2]);
     }
     else {
