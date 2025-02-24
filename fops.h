@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/syscall.h>
+#include <sys/types.h>
+#include <fcntl.h>
 
 int createFile(const char *filename, int flags, mode_t mode);
 

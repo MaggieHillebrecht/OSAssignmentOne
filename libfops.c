@@ -10,6 +10,7 @@ ssize_t writeToFile(int fd, const void *buf, size_t count){
 
 ssize_t readFromFile(int fd, void *buf, size_t count){
     syscall(SYS_read, fd, buf, count);
+    closeFile(fd);
 }
 
 int closeFile(int fd){
