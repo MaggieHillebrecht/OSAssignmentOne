@@ -19,7 +19,7 @@ int main(int argc, char** argv){
             return -1;
         } else {
             result = createFile(argv[2], (O_CREAT | O_WRONLY | O_TRUNC), (0744));
-            if (result != 0) {
+            if (result < 0) {
                 perror("Error creating file");
                 return -1;
             }
@@ -31,7 +31,7 @@ int main(int argc, char** argv){
             return -1;
         } else {
             result = writeToFile(createFile(argv[2], (O_WRONLY), 644), argv[3], strlen(argv[3]));
-            if (result != 0) {
+            if (result < 0) {
                 perror("Error writing to file");
                 return -1;
             }
@@ -44,7 +44,7 @@ int main(int argc, char** argv){
         } else {
             char buffer[500];
             result = readFromFile(createFile(argv[2],O_RDONLY, 444), buffer, sizeof(buffer));
-            if (result != 0) {
+            if (result < 0) {
                 perror("Error reading from file");
                 return -1;
             }
