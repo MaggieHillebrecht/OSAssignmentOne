@@ -5,15 +5,15 @@ int createFile(const char *filename, int flags, mode_t mode){
 }
 
 ssize_t writeToFile(int fd, const void *buf, size_t count){
-    int fileDescriptor = syscall(SYS_write, fd, buf, count);
+    int result = syscall(SYS_write, fd, buf, count);
     closeFile(fd);
-    return fileDescriptor;
+    return result;
 }
 
 ssize_t readFromFile(int fd, void *buf, size_t count){
-    int fileDescriptor = syscall(SYS_read, fd, buf, count);
+    int result = syscall(SYS_read, fd, buf, count);
     closeFile(fd);
-    return fileDescriptor;
+    return result;
 }
 
 int closeFile(int fd){
