@@ -13,12 +13,11 @@ int main(int argc, char** argv){
     */
 
     if (strcmp(argv[1], "create") == 0) {
-        printf("TEST\n");
         if (argc != 3) {
             printf("Invalid amount of arguments. Exiting...\n");
             return -1;
         } else {
-            result = createFile(argv[2], (O_CREAT | O_WRONLY | O_TRUNC), (0744));
+            result = createFile(argv[2], (O_CREAT | O_WRONLY | O_EXCL), (0744));
             if (result < 0) {
                 perror("Error creating file");
                 return -1;
@@ -78,7 +77,7 @@ int main(int argc, char** argv){
     }
     else {
         errno = EINVAL;
-        perror("Invalid command");
+        perror("Error");
         return -1;
     }
 }
