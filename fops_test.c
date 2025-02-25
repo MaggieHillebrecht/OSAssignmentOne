@@ -7,6 +7,7 @@
 #include "fops.h"
 
 int main(int argc, char** argv){
+    int result;
     /*
     Try catch, checking the first index of argv to see if it is create, write, read, close, delete
     
@@ -34,17 +35,21 @@ int main(int argc, char** argv){
         closeFile(fd);
     }
     else if (strcmp(argv[1], "read") == 0) {
-        int fd = createFile(argv[2], O_RDONLY, 0444);
-        if (fd < 0) {
-            perror("Failed to open file for reading");
+        if (argc != 3) {
+            printf("Invalid amount of arguments. Exiting...\n");
             return -1;
+        } else {
+            char buffer[500];
+            result = readFromFile(createFile(argv[2],O_RDONLY, 444), buffer, sizeof(buffer));
+            if (result < 0) {
+                perror("Error reading from file");
+                return -1;
+            }
+            else {
+                printf("%s\n", buffer);
+            }
         }
-        char buffer[500] = {0};
-        readFromFile(fd, buffer, sizeof(buffer));
-        printf("%s\n", buffer);
-        closeFile(fd);
-    }
-    else if (strcmp(argv[1], "close") == 0) {
+    } else if (strcmp(argv[1], "close") == 0) {
         int fd = createFile(argv[2], O_RDONLY, 0444);
         if (fd < 0) {
             perror("Failed to open file for closing");
@@ -58,32 +63,4 @@ int main(int argc, char** argv){
     else {
         perror(strerror(errno));
     }
-
-   /*switch (argv[1])
-   {
-   case 'create':
-    createFile(argv[2], 1, open);
-    break;
-
-    case 'write':
-    writeToFile(argv[2], argv[3], 1);
-    break;
-
-    case 'read':
-    readFromFile(argv[2], buf, 1);
-    break;
-
-    case 'close':
-    closeFile(argv[2]);
-    break;
-
-    case 'delete':
-    deleteFile(argv[2]);
-    break;
-   
-   default:
-        strerror(errno);
-    break;
-   }
-   */
 }
