@@ -1,4 +1,9 @@
 #include "fops.h"
+/*
+Me and Joel used various man calls as well as google to
+check and understand what needed to be passed in to each function
+and what the data type ssize_t needs to return
+*/
 
 int createFile(const char *filename, int flags, mode_t mode){
     return syscall(SYS_open, filename, flags, mode);

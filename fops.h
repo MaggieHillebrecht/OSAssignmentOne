@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <fcntl.h>
 
+//Header file given by the assignment description
 int createFile(const char *filename, int flags, mode_t mode);
 
 ssize_t writeToFile(int fd, const void *buf, size_t count);

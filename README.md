@@ -17,7 +17,8 @@ CPSC 380 Section 1
 * `libfops.a`
 * `lobfops.c`
 * `README.md`
-* `example.txt`
+* `fops.o`
+* `fops_test`
 
 ## Build Instructions
 ```
@@ -39,3 +40,4 @@ gcc fops_test.c -o fops_test libfops.a
 * `man 2 syscall` -- let us know to use `sys/sycall.h` header file
 * https://medium.com/@joshuaudayagiri/linux-system-calls-read-a9ce7ed33827 -- Gave some more detail for `read()` and also helped to realize that you need to close the file when you finish reading.
 * https://medium.com/@joshuaudayagiri/linux-system-calls-open-e194e6fe2395 -- Gave some more detail for `open()`
+* Maggie got help from ChatGPT in regards to debugging the static library creation, as well as how to go about debugging my read command not working even though Joel got read to work on his branch https://chatgpt.com/share/67bceab2-322c-800f-b008-879983c94656

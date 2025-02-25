@@ -4,15 +4,14 @@
 #include "fops.h"
 
 int main(int argc, char** argv){
+    //Result variable is used see the status after the system called 
+    //this helps us with specifying error handling
     int result;
-    /*
-    Try catch, checking the first index of argv to see if it is create, write, read, close, delete
-    
-    save open call for fd parameter in read
-    set up permissions for the file, set up as read write execute 0664 is the last argument
-    */
 
+    //Used an if statement in order to check each command instead of a switch statement
+    //as we found this way to be more reliable and easier to implement
     if (strcmp(argv[1], "create") == 0) {
+        //Checks to see if the number of arguments are correct in order to proceed with the system call
         if (argc != 3) {
             printf("Invalid amount of arguments. Exiting...\n");
             return -1;
@@ -76,6 +75,7 @@ int main(int argc, char** argv){
         }
     }
     else {
+        //This errno is a general error where it is set to invalid arguments
         errno = EINVAL;
         perror("Error");
         return -1;
